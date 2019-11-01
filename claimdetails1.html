@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>NHPS | Full Claim Details</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="css/common.css">
+  <script src="js/common1.js"></script>
+</head>
+
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Ayushmaan Bharath ( National Health Protection Scheme )</h1>
+      <a href="index.html">Home</a>
+    </header>
+    <article>
+      <h1 class="subheader">Claim Details</h1>
+      <p>
+        <div id="divClaimid">
+          <!-- <table id="tblCreateClaim"  border='0' width='480px' cellpadding='0' cellspacing='0' align='center'>
+          <td align='center'>Claim ID : </td>
+            <td>  <input type="text" id="claimid" placeholder="Enter claim id">
+              <button type="submit" onclick="getclaimdetails()"> Submit </button></td>
+          </tr>
+          <tr> <td>&nbsp;</td> </tr>
+      </table> -->
+        </div>
+
+        <div id="divClaimDetails" style="display: none;">
+          <table id="tblCreateClaim" border='0' width='480px' cellpadding='0' cellspacing='0' align='center'>
+            <td align='center'>Patient Address : </td>
+            <td>
+              <label id="lblPatientAddress"></label>
+            </td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td align='center'>Provider Address :</td>
+              <td>
+                <label id="lblProviderAddress"></label>
+              </td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td align='center'>State Address :</td>
+              <td>
+                <label id="lblstareAddress"></label>
+              </td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td align='center'>Address of Created User :</td>
+              <td>
+                <label id="lblCreatedByAddress"></label>
+              </td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td align='center'> CPT IDs :</td>
+              <td>
+                <label id="lblCPTIDs"></label>
+              </td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td align='center'> Central Govt Share :</td>
+              <td>
+               <b>&#8377;<label id="lblCentralGovtShare"></label></b>
+              </td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td align='center'> State Govt Share :</td>
+              <td>
+               <b>&#8377;<label id="lblStateGovtShare"></label></b>
+              </td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td align='center'> Claim Status :</td>
+              <td>
+                <b><label id="lblClaimStatus"></label></b>
+              </td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+          </table>
+        </div>
+      </p>
+    </article>
+    <footer>Copyright &copy; Cluster IT Solutions</footer>
+  </div>
+  <script>
+    function getUrlVars() {
+      var vars = [],
+        hash;
+      var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+      for (var i = 0; i < hashes.length; i++) {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+      }
+      return vars;
+    }
+  </script>
+  <script>
+    $(document).ready(function () {
+      var claimID = getUrlVars()["id"];
+      //getting claim details
+      //  function getclaimdetails() {
+      // var claimID = $('#claimid').val();
+      // var claimID = 12;
+      console.log(claimID);
+      var claim = care.getClaimDetails(claimID, {
+        from: web3.eth.accounts[0]
+      }, function (err, result) {
+        if (!err) {
+          console.log("Details of" + claimID + " is :" + result[0], result[1], result[2], result[3],
+            result[4], result[5], result[6], result[7]);
+          $("#divClaimDetails").show();
+
+          $('#lblPatientAddress').html(result[0]);
+          $('#lblProviderAddress').html(result[1]);
+          $('#lblstareAddress').html(result[2]);
+          $('#lblCreatedByAddress').html(result[3]);
+          $('#lblCPTIDs').text(result[4][0]);
+          $('#lblCentralGovtShare').text(result[5]);
+          $('#lblStateGovtShare').text(result[6]);
+          var claimStatus = result[7].c[0];
+          console.log(claimStatus);
+          switch (claimStatus) {
+            case 0:
+              $('#lblClaimStatus').text("Created");
+              break;
+            case 1:
+              $('#lblClaimStatus').text("Approved");
+              break;
+            case 2:
+              $('#lblClaimStatus').text("Processed");
+              break;
+            default:
+              $('#lblClaimStatus').text("Rejected");
+          }
+          return false;
+        } else {
+          console.error(err);
+        }
+      });
+      //}
+      //getting claim details
+    }); //end of document ready
+  </script>
+
+</body>
+
+</html>

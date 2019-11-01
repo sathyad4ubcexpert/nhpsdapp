@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>NHPS | Health Care Center Portal - Create Claim</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="js/common1.js"></script>
+	<link rel="stylesheet" href="css/common.css">
+</head>
+
+<body>
+
+
+	<div class="container">
+		<header>
+			<h1>Ayushmaan Bharath ( National Health Protection Scheme )</h1>
+			<a href="index.html">Home</a>
+		</header>
+
+
+		<article>
+			<h1 class="subheader">Health Care Center Portal</h1>
+			<table id="tblCreateClaim" border='0' width='480px' cellpadding='0' cellspacing='0' align='center'>
+				<tr>
+					<td align='center'>Claim ID: </td>
+					<td>
+						<input type="text" value="" id="claimid" placeholder="Enter claimid...">
+					</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td align='center'>Patient Address:</td>
+					<td>
+						<input type="text" value="" id="patientAddress" placeholder="Enter patient address..." >
+					</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td align='center'>State Address:</td>
+					<td>
+						<input type="text" value="" id="stateAddress" placeholder="Enter state address...">
+					</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td align='center'>Provider Address:</td>
+					<td>
+						<input type="text" value="" id="providerAddress" placeholder="Enter provider address...">
+					</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td align='center'>ICD Code:</td>
+					<td>
+						<input type="text" value="" id="icd" placeholder="Enter ICD Code...">
+					</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+
+				<table border='0' cellpadding='0' cellspacing='0' width='480px' align='center'>
+					<tr>
+						<td align='center'>
+							<button onclick="createClaim()"> Create Claim</button>
+						</td>
+					</tr>
+				</table>
+			</table>
+
+		</article>
+
+		<footer>Copyright &copy; Cluster IT Solutions</footer>
+	</div>
+	<script>
+		function createClaim() {
+			var claimid = $("#claimid").val();
+			var patientAddress = $("#patientAddress").val();
+			var stateAddress = $("#stateAddress").val();
+			var providerAddress = $("#providerAddress").val();
+			var icd = $("#icd").val();
+			console.log(claimid + " " + patientAddress + " " + stateAddress + " " + providerAddress + " " + icd);
+			var icdArray = [icd];
+			var createClaim = care.addClaim(claimid, stateAddress, patientAddress, providerAddress, icdArray, {
+				from: web3.eth.accounts[0]
+			}, function (err, result) {
+				if (!err) {
+					alert("Mining started for creating claim, this may take few minutes.");
+				} else {
+					console.error(err);
+				}
+			});
+		};
+	</script>
+</body>
+
+</html>

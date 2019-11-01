@@ -1,0 +1,44 @@
+body {
+    background-color:#f0f0f0;
+}
+    div.container {
+        width: 100%;
+        border: 1px solid gray;
+        background-image: url("../images/nhpc6.jpg");
+        background-repeat: no-repeat, repeat;
+        background-size: contain;
+    }
+
+    header  {
+        padding: 1em;
+        color: white;
+        background-color: orange;
+        clear: left;
+        text-align: center;
+    }
+    footer {
+        padding: 1em;
+        color: white;
+        background-color: green;
+        clear: left;
+        text-align: center;
+    }
+
+    article {
+        margin-left: 0px;
+        border-left: 1px solid gray;
+        padding: 1em;
+        overflow: hidden;
+        min-height: 600px;
+    }
+
+    .subheader {
+    text-align: center;
+    }
+
+    #tblCreateClaim input{
+        width : 200px;
+    }
+    .divtextTODO{
+        font-size: 15px
+    }

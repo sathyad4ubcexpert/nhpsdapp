@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>NHPS | Health Care Center - Patient Details</title>
+    <meta charset="utf-8">
+    <script src="js/web3.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/common1.js"></script>
+    <link rel="stylesheet" href="css/common.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Ayushmaan Bharath ( National Health Protection Scheme )</h1>
+            <a href="index.html">Home</a>
+        </header>
+        <article>
+            <h1 class="subheader">Patient Details</h1>
+            <p>
+                <table border='0' width='480px' cellpadding='0' cellspacing='0' align='center'>
+                    <td align='center'>Patient Account Address: </td>
+                    <td>
+                        <input type="text" id="patientid" placeholder="Enter account address">
+                        <button onclick="getpatientdetails()">Go</button>
+                    </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                </table>
+
+
+                <div id="divPatientDetails" style="display: none;">
+                    <hr>
+
+                    <table border='0' width='480px' cellpadding='0' cellspacing='0' align='center'>
+                        <td align='center'> Maximum Claim Amount :</td>
+                        <td>
+                            &#8377;<label id="lblmaxClaimAmount"></label>
+                        </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td align='center'> Amount Claimed :</td>
+                            <td>
+                                &#8377;<label id="lblamountClaimed"></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td align='center'> Number Of Claims:</td>
+                            <td>
+                                <label id="lblnumberOfClaims"></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+                </div>
+            </p>
+        </article>
+        <footer>Copyright &copy; Cluster IT Solutions</footer>
+    </div>
+    <script>
+        function getpatientdetails() {
+            var patientID = $("#patientid").val();
+
+            var patient = care.getPatientDetails(patientID, {
+                from: web3.eth.accounts[0]
+            }, function (err, result) {
+                if (!err) {
+                    console.log("Patient Details for  " + patientID + " is :" + result);
+                    $("#divPatientDetails").show();
+
+                    $('#lblmaxClaimAmount').text(result[0]);
+                    $('#lblamountClaimed').text(result[1]);
+                    $('#lblnumberOfClaims').text(result[2]);
+                    return false;
+                } else {
+                    console.error(err);
+                }
+            });
+            return false;
+        }
+    </script>
+</body>
+
+</html>
